@@ -1,15 +1,3 @@
-# we'll be given three choieces (rock, paper, and scissor)
-# if the user input an invalid choice
-#   print error
-# we will also let the computer to make a decision
-# print the result
-# determine who's the winner
-# ask whether the user want to continue or not
-# if yes
-#   continue
-# if not
-#   terminate
-
 import random
 
 # below is what you call constant. this is called DRY (Don't Repeat Yourself) method. when coding it is beneficial to avoid keep repeating the same thing over and over which is how this method came.

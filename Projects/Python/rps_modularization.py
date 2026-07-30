@@ -1,21 +1,9 @@
-# we'll be given three choieces (rock, paper, and scissor)
-# if the user input an invalid choice
-#   print error
-# we will also let the computer to make a decision
-# print the result
-# determine who's the winner
-# ask whether the user want to continue or not
-# if yes
-#   continue
-# if not
-#   terminate
-
+# This version or rock, paper, scissor we tried to implement a method called modularization
 # we use list to make a cleaner shorter code instead of using != three times
 # one weakness of list however is that it can be modified
 # choices = ["r", "p", "s"] can be modifed using choices.modified
 # another method we can use is to use tuple instead becaue tuple is a read only list
 
-# This version or rock, paper, scissor we tried to implement a method called modularization
 # Which essentially we try to break down a big code into smaller code without changing its functionality
 import random
 
@@ -75,8 +63,7 @@ def commencing_game():
 
 
 # remember that your entire program now is in function form. to run it you need to call the commencing_game()
-# the purpose of modularization is to seperate the entire program to a smaller functions, this method
-# will help you when you encounter some bugs or error within you code, by seperating them it make it easier to locate the error and easier to handle
+# the purpose of modularization is to seperate the entire program to a smaller functions, this method will help you when you encounter some bugs or error within you code, by seperating them it make it easier to locate the error and easier to handle
 # since you only need to analyst the error part instead of your entire code.
 
 commencing_game()
