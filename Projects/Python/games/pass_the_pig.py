@@ -42,7 +42,7 @@ while True:
         print("Invalid input. Please enter a valid number (2-5).")
 
 
-winning_score = 100
+winning_score = 30
 
 # this [] is a list used to set each player score. this loop essentially will set a 0 score value based on how many players participating
 # if the number of players is 3 that means this list will run a loop 3 times and setting each player's initial score so it becomes [0, 0, 0]
@@ -57,3 +57,36 @@ player_scores = [0 for _ in range(players)]
 #   [0, 0, 0, 0, 0]
 
 while max(player_scores) < winning_score:
+
+    for player_id in range(players):
+        print(f"\nPlayer {player_id + 1} turn.")
+        print(f"Your total score is: {player_scores[player_id]}\n")
+        current_score = 0
+        # the loop below works by asking whether you want to roll. as long you don't roll a 1 loop will continue and your score will keep being added
+        # the moment you roll 1 your turn is over hand it will be the next player turn.
+        while True:
+            # if you respond with y it'll roll the die other than that it means you are ending your turn.
+            roll_start = input("Would you like to roll (y) ? ")
+            if roll_start.lower() != "y":
+                break
+
+            value = die_roll()
+            if value == 1:
+                print("You just rolled a 1! Your turn over")
+                current_score = 0
+                break
+            else:
+                current_score += value
+                print(f"You rolled a {value}.")
+
+            # here your cummulative score will be shown
+            print(f"Your current score is: {current_score}")
+
+        player_scores[player_id] += current_score
+        # the moment you end your turn it'll break through the current loop and show your total score
+        # then it'll re enter the loop for the next player's turn
+        print(f"Your total score is: {player_scores[player_id]}")
+
+winner_score = max(player_scores)
+winner_id = player_scores.index(winner_score)
+print(f"Player {winner_id + 1} with a score of {winner_score} is the winner!!!")
