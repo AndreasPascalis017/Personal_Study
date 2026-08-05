@@ -62,10 +62,10 @@ while max(player_scores) < winning_score:
         print(f"\nPlayer {player_id + 1} turn.")
         print(f"Your total score is: {player_scores[player_id]}\n")
         current_score = 0
-        # the loop below works by asking whether you want to roll. as long you don't roll a 1 loop will continue and your score will keep being added
-        # the moment you roll 1 your turn is over hand it will be the next player turn.
+        # the loop below works by asking whether you want to roll. as long you don't roll a 1 the loop will continue and your score will keep being added
+        # the moment you roll 1 your turn is over and it will be the next player turn.
         while True:
-            # if you respond with y it'll roll the die other than that it means you are ending your turn.
+            # if you respond with y it'll roll the die, other than that it means you are ending your turn.
             roll_start = input("Would you like to roll (y) ? ")
             if roll_start.lower() != "y":
                 break
