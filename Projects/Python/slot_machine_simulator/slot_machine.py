@@ -23,16 +23,76 @@ symbol_count = {
     "🍒": 8
 }
 
-# we use 3 parameters that we'll take form the argument above.
+# symbol_value act as a multiplier when you do get that symbol, the rarer it is the bigger the multiplier will be.
+symbol_value = {
+    "💎": 5,
+    "💘": 4,
+    "🍆": 3,
+    "🍒": 2
+}
 
 
-def get_slot_spine(rows, cols, symbols):
-    pass
+def check_winnings(columns, lines, bet, values):
+    winnings = 0
+    # we loop through every line or row depending on how many the user input
+    winning_lines = []
+    for line in range(lines):
+        symbol = columns[0][line]
+        # This loop through the entire column on the current line
+        for column in columns:
+            # We see whether there's any different symbol within that line in which if there is we break.
+            symbol_to_check = column[line]
+            if symbol != symbol_to_check:
+                break
+        else:
+            # if they got the same symbol for an entire line they win. They then get the final value multiply by their symbol multiplier.
+            winnings += values[symbol] * bet
+            winning_lines.append(line + 1)
+
+    return winnings, winning_lines
+    # we use 3 parameters that we'll take form the argument above.
+
+
+def get_slot_spin(rows, cols, symbols):
+    # All ssymbol can be seen as the reel of the slot machine where it'll spin every symbol available.
+    all_symbols = []
+    # symbol is the key "💘", while symbol_count is the value each symbol have.
+    # symbol.item() is used to get both the key of the symbol "💘" and the value associated with the dictionary.
+    for symbol, symbol_count in symbols.items():
+        for _ in range(symbol_count):
+            # the way this loop work is as follow
+            # get the symbol "💘" -> check the value "2" -> it will loop 2 times -> and add the symbol to the list -> within that list 2 spaces are reserved for "💘"
+            all_symbols.append(symbol)
+
+    columns = []  # we define our column list
+    for _ in range(cols):
+        column = []
+        current_symbols = all_symbols[:]
+        for _ in range(rows):
+            value = random.choice(current_symbols)
+            # This part is to prevent the machine from picking the symbol again
+            current_symbols.remove(value)
+            column.append(value)
+
+        columns.append(column)
+
+    return columns
+
+
+def print_slot_machine(columns):
+    for row in range(len(columns[0])):
+        for i, column in enumerate(columns):
+            if i != len(columns) - 1:
+                print(column[row], end=" | ")
+            else:
+                print(column[row], end="")
+
+        print()
 
 
 def deposit():
     while True:
-        amount = input("Please enter your deposit? $")
+        amount = input("Please enter your deposit $")
         if amount.isdigit():
             # we change the string from the input above into an int.
             amount = int(amount)
@@ -78,13 +138,12 @@ def get_bet():
     return amount
 
 
-def main():
-    balance = deposit()
+def spin(balance):
     slot_lines = line_number_pick()
 
     while True:
         bet = get_bet()
-        total_bet_amount = bet*slot_lines
+        total_bet_amount = bet * slot_lines
 
         # We need to check first whether the amount of balance you have actually enough to make the bet.
         if total_bet_amount > balance:
@@ -95,6 +154,26 @@ def main():
 
     print(
         f"You're betting ${bet} on {slot_lines} line(s). Your total betting amount is ${total_bet_amount}")
+
+    slots = get_slot_spin(ROWS, COLS, symbol_count)
+    print_slot_machine(slots)
+    winnings, winning_line = check_winnings(
+        slots, slot_lines, bet, symbol_value)
+    print(f"You won ${winnings}")
+    print(f"You won on lines: ", *winning_line)
+    return winnings - total_bet_amount
+
+
+def main():
+    balance = deposit()
+    while True:
+        print(f"Your current balance is ${balance}")
+        start = input("Press x to spin (q to quit)")
+        if start == "q":
+            break
+        balance += spin(balance)
+
+    print(f"You left with ${balance}")
 
 
 main()
